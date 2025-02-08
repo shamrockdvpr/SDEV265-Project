@@ -3,7 +3,7 @@
 {% block content %}
     <article class="post">
         <aside class="actions">
-            {% if user.is_authenticated %}
+            {% if user.is_staff %}
                 <a class="btn btn-secondary" href="{% url 'post_edit' pk=post.pk %}">
                     {% include './icons/pencil-fill.svg' %}
                 </a>
@@ -29,7 +29,7 @@
     <hr>
     <a class="btn btn-default" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
     {% for comment in post.comments.all %}
-        {% if user.is_authenticated or comment.approved_comment %}
+        {% if user.is_staff or comment.approved_comment %}
             <div class="comment">
                 <div class="date">
                     {{ comment.created_date }}
