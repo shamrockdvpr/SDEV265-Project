@@ -50,9 +50,19 @@ footer {
     float: right;
 }
 
-.post-form textarea,
+.post-form,
+.post-form h2 {
+    padding-right: 2em;
+    padding-left: 2em;
+}
+
+.post-form textarea {
+    width: 50%;
+    height: 100px;
+}
+
 .post-form input {
-    width: 100%;
+    width: 10%;
 }
 
 .top-menu,

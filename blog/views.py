@@ -1,13 +1,12 @@
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import redirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import CreateView
 
-from .forms import PostForm, CommentForm
+from .forms import PostForm, CommentForm, IngredientToRecipeFormSet, IngredientToRecipe
 from .models import Post, Comment
 
 
@@ -18,21 +17,28 @@ def post_list(request):
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/post_detail.html', {'post': post})
+    ingredients = IngredientToRecipe.objects.filter(post=post)
+    return render(request, 'blog/post_detail.html', {'post': post, 'ingredients': ingredients,})
 
 
 @staff_member_required()
 def post_new(request):
     if request.method == "POST":
-        form = PostForm(request.POST)
-        if form.is_valid():
+        form = PostForm(request.POST, request.FILES)
+        formset = IngredientToRecipeFormSet(request.POST, instance=form.instance)
+        if form.is_valid() and formset.is_valid():
             post = form.save(commit=False)
             post.author = request.user
             post.save()
+            formset.instance = post
+            formset.save()
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm()
-    return render(request, 'blog/post_edit.html', {'form': form})
+        formset = IngredientToRecipeFormSet()
+    return render(request, 'blog/post_edit.html', {'form': form,
+                                                   'formset': formset,
+                                                   })
 
 
 @staff_member_required()

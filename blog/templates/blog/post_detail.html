@@ -24,7 +24,23 @@
             </form>
         {% endif %}
         <h2>{{ post.title }}</h2>
-        <p>{{ post.text|linebreaksbr }}</p>
+        <p>{{ post.description|linebreaksbr }}</p>
+        {% for item in ingredients %}
+            <li>
+                <strong>{{ item.ingredient }}:</strong>
+                {% if item.quantity %}
+                    {{ item.quantity }}
+                {% endif %}
+                {% if item.unit %}
+                    {{ item.unit }}
+                {% endif %}
+                {% if item.instructions %}
+                    ({{ item.instructions }})
+                {% endif %}
+
+            </li>
+
+        {% endfor %}
     </article>
     <hr>
     <a class="btn btn-default" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
