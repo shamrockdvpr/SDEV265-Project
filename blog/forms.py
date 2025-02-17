@@ -13,9 +13,9 @@ class PostForm(forms.ModelForm):
 IngredientToRecipeFormSet = inlineformset_factory(
     Post,  # Parent model
     IngredientToRecipe,  # Child model
-    fields=('ingredient', 'quantity', 'unit', 'instructions'),  # Fields to expose
+    fields=('ingredient', 'quantity', 'unit', 'instructions'),
     extra=5,  # Number of blank ingredient rows to show initially
-    can_delete=True  # Allow deletion of ingredients
+    # can_delete=True  # Allow deletion of ingredients. Unused right now
 )
 
 

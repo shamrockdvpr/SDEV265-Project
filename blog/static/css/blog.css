@@ -42,7 +42,7 @@ footer {
     background-color: #c26100;
 }
 
-.date {
+.author_date {
     color: #828282;
 }
 
@@ -71,6 +71,7 @@ footer {
     float: right;
     font-size: 26pt;
     margin-right: 20px;
+    color: #000000;
 }
 
 .top-menu .bi {
@@ -83,12 +84,8 @@ footer {
 
 .logout-button {
     font-size: 12pt;
-    /*background-color: #c25100;*/
-    /*color: white; !* Set text color *!*/
-    /*border: none; !* Remove unnecessary borders *!*/
     cursor: pointer;
 }
-
 
 .post {
     margin-bottom: 70px;
@@ -99,21 +96,37 @@ footer {
     color: #000000;
 }
 
-.post > .date,
 .post > .actions {
+    display: flex;
+    flex-direction: row;
     float: right;
+    white-space: normal;
 }
 
 .btn-secondary,
 .btn-secondary:visited {
-    color: #C25100;
+    color: #000000;
     background: none;
-    border-color: #C25100;
+    border-color: #000000;
+    float: right;
+    cursor: pointer;
 }
 
 .btn-secondary:hover {
-    color: #FFFFFF;
-    background-color: #C25100;
+    color: #000000;
+}
+
+.btn-secondary:active {
+}
+
+.btn-remove {
+    border: none;
+    background-color: transparent;
+    font-size: 12pt;
+}
+
+.bi-pencil-fill {
+    font-size: 12pt;
 }
 
 .comment {

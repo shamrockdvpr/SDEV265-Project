@@ -10,6 +10,7 @@
         {{ formset.management_form }}
         <table>
             {% for form in formset %}
+                {{ form.id }}
                 <tr>
                     {{ form.ingredient.label_tag }} {{ form.ingredient }}
                     {{ form.quantity.label_tag }} {{ form.quantity }}

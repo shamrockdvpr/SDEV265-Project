@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="page-header">
-    {% if user.is_staff %}
+    {% if user.is_authenticated %}
         <a href="{% url 'post_new' %}" class="top-menu"><span class="bi bi-plus"></span></a>
         <a href="{% url 'post_draft_list' %}" class="top-menu"><span class="bi bi-pencil"></span></a>
     {% endif %}

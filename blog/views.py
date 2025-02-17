@@ -18,14 +18,14 @@ def post_list(request):
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     ingredients = IngredientToRecipe.objects.filter(post=post)
-    return render(request, 'blog/post_detail.html', {'post': post, 'ingredients': ingredients,})
+    return render(request, 'blog/post_detail.html', {'post': post, 'ingredients': ingredients, })
 
 
-@staff_member_required()
+@login_required()
 def post_new(request):
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
-        formset = IngredientToRecipeFormSet(request.POST, instance=form.instance)
+        formset = IngredientToRecipeFormSet(request.POST)
         if form.is_valid() and formset.is_valid():
             post = form.save(commit=False)
             post.author = request.user
@@ -36,33 +36,43 @@ def post_new(request):
     else:
         form = PostForm()
         formset = IngredientToRecipeFormSet()
-    return render(request, 'blog/post_edit.html', {'form': form,
-                                                   'formset': formset,
-                                                   })
+    return render(request, 'blog/post_edit.html', {'form': form, 'formset': formset, })
 
 
-@staff_member_required()
+@login_required()
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
-        form = PostForm(request.POST, instance=post)
-        if form.is_valid():
+        form = PostForm(request.POST, request.FILES, instance=post)
+        formset = IngredientToRecipeFormSet(request.POST, instance=post)
+        if form.is_valid() and formset.is_valid():
             post = form.save(commit=False)
             post.author = request.user
             post.save()
+            formset.instance = post
+            formset.save()
             return redirect('post_detail', pk=post.pk)
+
+        if not form.is_valid():
+            print("Form errors:", form.errors)
+        if not formset.is_valid():
+            print("Formset errors:", formset.errors)
+
     else:
         form = PostForm(instance=post)
-    return render(request, 'blog/post_edit.html', {'form': form})
+        formset = IngredientToRecipeFormSet(instance=post)
+        print(form.errors)
+        print(formset.errors)
+    return render(request, 'blog/post_edit.html', {'form': form, 'formset': formset })
 
 
-@staff_member_required()
+@login_required()
 def post_draft_list(request):
     posts = Post.objects.filter(published_date__isnull=True).order_by('created_date')
     return render(request, 'blog/post_draft_list.html', {'posts': posts})
 
 
-@staff_member_required()
+@login_required()
 def post_publish(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == 'POST':
@@ -70,7 +80,7 @@ def post_publish(request, pk):
     return redirect('post_detail', pk=pk)
 
 
-@staff_member_required
+@login_required()
 def post_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == 'POST':
