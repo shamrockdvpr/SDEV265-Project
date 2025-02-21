@@ -8,18 +8,20 @@
 
         <h2>Ingredients</h2>
         {{ formset.management_form }}
-        <table>
-            {% for form in formset %}
-                {{ form.id }}
-                <tr>
-                    {{ form.ingredient.label_tag }} {{ form.ingredient }}
-                    {{ form.quantity.label_tag }} {{ form.quantity }}
-                    {{ form.unit.label_tag }} {{ form.unit }}
-                    {{ form.instructions.label_tag }} {{ form.instructions }}
-                    <br><br>
-                </tr>
-            {% endfor %}
-        </table>
-        <button type="submit" class="save btn btn-default">Save</button>
+        <div class="post-form ingredients">
+            <table>
+                {% for form in formset %}
+                    {{ form.id }}
+                    <tr>
+                        {{ form.ingredient.label_tag }} {{ form.ingredient }}
+                        {{ form.quantity.label_tag }} {{ form.quantity }}
+                        {{ form.unit.label_tag }} {{ form.unit }}
+                        {{ form.instructions.label_tag }} {{ form.instructions }}
+                        <br><br>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <button type="submit" class="btn btn-default">Save</button>
     </form>
 {% endblock %}

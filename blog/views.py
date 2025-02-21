@@ -53,6 +53,7 @@ def post_edit(request, pk):
             formset.save()
             return redirect('post_detail', pk=post.pk)
 
+# Used for debugging posts not saving correctly
         if not form.is_valid():
             print("Form errors:", form.errors)
         if not formset.is_valid():
@@ -63,7 +64,7 @@ def post_edit(request, pk):
         formset = IngredientToRecipeFormSet(instance=post)
         print(form.errors)
         print(formset.errors)
-    return render(request, 'blog/post_edit.html', {'form': form, 'formset': formset })
+    return render(request, 'blog/post_edit.html', {'form': form, 'formset': formset})
 
 
 @login_required()
@@ -121,3 +122,12 @@ class SignUpView(CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy("login")
     template_name = "registration/signup.html"
+
+
+def search_post(request):
+    if request.method == 'POST':
+        search_query = request.POST['search_query']
+        posts = Post.objects.filter(title__contains=search_query)
+        return render(request, 'blog/search_post.html', {'query': search_query, 'posts': posts})
+    else:
+        return render(request, 'blog/search_post.html', {})

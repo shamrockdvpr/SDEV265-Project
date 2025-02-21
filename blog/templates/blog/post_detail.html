@@ -2,18 +2,19 @@
 
 {% block content %}
     <article class="post">
-        <aside class="actions">
+        <div class="actions">
             {% if post.author == request.user or user.is_staff %}
-                <a class="btn btn-secondary" href="{% url 'post_edit' pk=post.pk %}"><span
-                        class="bi bi-pencil-fill"></span></a>
-                <form method="POST" action="{% url 'post_remove' pk=post.pk %}">{% csrf_token %}
+                <a class="btn btn-secondary" href="{% url 'post_edit' pk=post.pk %}">
+                    <span class="bi bi-pencil-fill"></span></a>
+                <form method="POST" action="{% url 'post_remove' pk=post.pk %}" style="display: inline">
+                    {% csrf_token %}
                     <button type="submit" class="post btn btn-remove">
-                        <a class="btn btn-secondary" href="{% url 'post_remove' pk=post.pk %}"> <span
-                                class="bi bi-trash"></span></a>
+                        <a class="btn btn-secondary" href="{% url 'post_remove' pk=post.pk %}">
+                            <span class="bi bi-trash"></span></a>
                     </button>
                 </form>
             {% endif %}
-        </aside>
+        </div>
         <h2>{{ post.title }}</h2>
         {% if post.author and post.published_date %}
             <div class="author_date">
@@ -21,7 +22,7 @@
             </div>
         {% else %}
             <form method="POST" action="{% url 'post_publish' pk=post.pk %}" class="post-form">{% csrf_token %}
-                <button type="submit" class="post btn btn-secondary" name="publish">Publish</button>
+                <button type="submit" class="btn btn-secondary" name="publish">Publish</button>
             </form>
         {% endif %}
         <p>{{ post.description|linebreaksbr }}</p>

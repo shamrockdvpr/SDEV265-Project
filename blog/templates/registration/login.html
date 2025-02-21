@@ -5,6 +5,9 @@
         <p>Your username and password didn't match. Please try again.</p>
     {% endif %}
 
+    <h4>Select login to access your account. Otherwise, select signup to create an
+        account.</h4>
+
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
         <table>

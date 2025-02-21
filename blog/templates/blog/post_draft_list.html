@@ -2,6 +2,7 @@
 
 {% block content %}
     <h1>Drafts</h1>
+    <h5>Please finish editing your recipe and hit publish to submit.</h5>
     {% for post in posts %}
         {% if post.author == request.user %}
             <div class="post">
