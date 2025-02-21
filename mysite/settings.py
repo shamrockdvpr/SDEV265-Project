@@ -25,7 +25,7 @@ SECRET_KEY = 'r$u@88t8+jdo^18t@8b$2q(80bw-ub7f9^fvj6grweh9u@fufl'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'webtest-f4zm.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'webtest-f4zm.onrender.com', '.pythonanywhere.com']
 
 
 # Application definition
