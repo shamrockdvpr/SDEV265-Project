@@ -25,21 +25,29 @@
                 <button type="submit" class="btn btn-secondary" name="publish">Publish</button>
             </form>
         {% endif %}
-        <p>{{ post.description|linebreaksbr }}</p>
-        {% for item in ingredients %}
-            <li>
-                <strong>{{ item.ingredient }}:</strong>
-                {% if item.quantity %}
-                    {{ item.quantity }}
-                {% endif %}
-                {% if item.unit %}
-                    {{ item.unit }}
-                {% endif %}
-                {% if item.instructions %}
-                    ({{ item.instructions }})
-                {% endif %}
-            </li>
-        {% endfor %}
+        <div class="post-body">
+            <p>{{ post.description|linebreaksbr }}</p>
+
+            {% for image in post.recipeimg_set.all %}
+                <img src="{{ image.img.url }}" alt="Recipe Image" class="recipe-image">
+            {% endfor %}
+
+
+            {% for item in ingredients %}
+                <li>
+                    <strong>{{ item.ingredient }}:</strong>
+                    {% if item.quantity %}
+                        {{ item.quantity }}
+                    {% endif %}
+                    {% if item.unit %}
+                        {{ item.unit }}
+                    {% endif %}
+                    {% if item.instructions %}
+                        ({{ item.instructions }})
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </div>
     </article>
     <hr>
     <a class="btn btn-default" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>

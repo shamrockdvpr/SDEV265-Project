@@ -1,11 +1,18 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-    <form method="POST" class="post-form">
+    <form method="POST" class="post-form" enctype="multipart/form-data">
         {% csrf_token %}
         <h2>Post Details</h2>
         {{ form.as_p }}
 
+        {{ img_form.as_p }}
+        {% if img_form.instance.img %}
+            <div>
+                <h3>Current Image:</h3>
+                <img src="{{ img_form.instance.img.url }}" alt="Current Image" height="300px" width="300px">
+            </div>
+        {% endif %}
         <h2>Ingredients</h2>
         {{ formset.management_form }}
         <div class="post-form ingredients">

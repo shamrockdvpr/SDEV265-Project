@@ -3,6 +3,10 @@ from . import views
 
 from .views import SignUpView
 
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 urlpatterns = [
     path('', views.post_list, name='post_list'),
     path('post/<int:pk>/', views.post_detail, name='post_detail'),
@@ -17,3 +21,7 @@ urlpatterns = [
     path("signup/", SignUpView.as_view(), name="signup"),
     path('search/', views.search_post, name='search-post'),
 ]
+
+if settings.DEBUG:
+        urlpatterns += static(settings.MEDIA_URL,
+                              document_root=settings.MEDIA_ROOT)

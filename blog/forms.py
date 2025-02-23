@@ -1,13 +1,17 @@
 from django import forms
 from django.forms import inlineformset_factory
-from .models import Post, Comment, IngredientToRecipe
+from .models import Post, Comment, IngredientToRecipe, RecipeImg
 
 
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('author', 'title', 'description', 'picture')
+        fields = ('author', 'title', 'description')
 
+class RecipeImgForm(forms.ModelForm):
+    class Meta:
+        model = RecipeImg
+        fields = ('img',)
 
 # FormSet for managing ingredients linked through IngredientToRecipe
 IngredientToRecipeFormSet = inlineformset_factory(
