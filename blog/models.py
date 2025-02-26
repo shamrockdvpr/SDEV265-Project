@@ -4,17 +4,38 @@ from django.utils import timezone
 
 # Create your models here.
 class IngredientToRecipe(models.Model):
+    """
+    IngredientToRecipe model is the format for storing ingredients information in the database.
+    post variable specifies the parent model with a ForeignKey.
+    ingredient variable allows naming of an ingredient.
+    quantity variable allows specifying the quantity of an ingredient.
+    unit variable allows specifying the unit of an ingredient.
+    instructions variable allows specifying the instructions for preparing an ingredient.
+    """
     post = models.ForeignKey('blog.Post', on_delete=models.CASCADE)
     ingredient = models.CharField(max_length=50)
-    quantity = models.CharField(max_length=50, blank=True, null=True)  # 400
-    unit = models.CharField(max_length=50, blank=True, null=True)  # pounds, lbs, oz ,grams, etc
-    instructions = models.CharField(max_length=50, blank=True, null=True)  # chopped, diced etc
+    quantity = models.CharField(max_length=50, blank=True, null=True)
+    unit = models.CharField(max_length=50, blank=True, null=True)
+    instructions = models.CharField(max_length=50, blank=True, null=True)
 
 class RecipeImg(models.Model):
+    """
+    RecipeImg model is the format for storing images for recipes.
+    post variable specifies the parent model with a ForeignKey.
+    img variable allows storing an image for a recipe.
+    """
     post = models.ForeignKey('blog.Post', on_delete=models.CASCADE)
     img = models.ImageField(upload_to='images/', null=True, blank=True)
 
 class Post(models.Model):
+    """
+    Post model is the format for storing blog posts.
+    author variable allows naming of the author of a blog post.
+    title variable allows naming of the title of a blog post.
+    description variable allows specifying the description of a blog post.
+    created_date variable automatically sets the date and time when a blog post is created.
+    published_date variable automatically sets the published date of a blog post.
+    """
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.TextField()
@@ -22,6 +43,9 @@ class Post(models.Model):
     published_date = models.DateTimeField(blank=True, null=True)
 
     def publish(self):
+        """
+        publish method finds the current date and time and sets it as the published date.
+        """
         self.published_date = timezone.now()
         self.save()
 
@@ -29,10 +53,16 @@ class Post(models.Model):
         return self.title
 
     def approved_comments(self):
+        """
+        Shows approved comments on posts.
+        """
         return self.comments.filter(approved_comment=True)
 
 
 class Comment(models.Model):
+    """
+    Comment class is the format for storing comments on blog posts.
+    """
     post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='comments')
     author = models.CharField(max_length=200)
     text = models.TextField()
@@ -40,6 +70,9 @@ class Comment(models.Model):
     approved_comment = models.BooleanField(default=False)
 
     def approve(self):
+        """
+        Checks if the comment is approved and saves it.
+        """
         self.approved_comment = True
         self.save()
 

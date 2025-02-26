@@ -7,6 +7,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
+# URL formats used by the website for various functions
 urlpatterns = [
     path('', views.post_list, name='post_list'),
     path('post/<int:pk>/', views.post_detail, name='post_detail'),
