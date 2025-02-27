@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib import admin
 from django.forms import inlineformset_factory
 from .models import Post, Comment, IngredientToRecipe, RecipeImg
 
@@ -24,8 +25,11 @@ IngredientToRecipeFormSet = inlineformset_factory(
     Post,  # Parent model
     IngredientToRecipe,  # Child model
     fields=('ingredient', 'quantity', 'unit', 'instructions'),
-    extra=5,  # Number of blank ingredient rows to show initially
+    extra=5,
+    can_delete=True,
 )
+
+
 
 
 class CommentForm(forms.ModelForm):

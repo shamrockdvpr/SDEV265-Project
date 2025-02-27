@@ -27,12 +27,9 @@
         {% endif %}
         <div class="post-body">
             <p>{{ post.description|linebreaksbr }}</p>
-
             {% for image in post.recipeimg_set.all %}
                 <img src="{{ image.img.url }}" alt="Recipe Image" class="recipe-image">
             {% endfor %}
-
-
             {% for item in ingredients %}
                 <li>
                     <strong>{{ item.ingredient }}:</strong>

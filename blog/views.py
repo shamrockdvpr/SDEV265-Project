@@ -29,8 +29,11 @@ def post_detail(request, pk):
     """
     post = get_object_or_404(Post, pk=pk)
     ingredients = IngredientToRecipe.objects.filter(post=post)
-    image = RecipeImg.objects.all()
-    return render(request, 'blog/post_detail.html', {'post': post, 'ingredients': ingredients, 'img': image})
+    try:
+        image = RecipeImg.objects.all()
+        return render(request, 'blog/post_detail.html', {'post': post, 'ingredients': ingredients, 'img': image})
+    except ValueError:
+        return render(request, 'blog/post_detail.html', {'post': post, 'ingredients': ingredients, })
 
 
 @login_required()

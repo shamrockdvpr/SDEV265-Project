@@ -12,11 +12,32 @@ class IngredientToRecipe(models.Model):
     unit variable allows specifying the unit of an ingredient.
     instructions variable allows specifying the instructions for preparing an ingredient.
     """
+    CUPS = 'Cups'
+    TABLESPOON = 'tbsp'
+    TEASPOONS = 'tsp'
+    OUNCES = 'oz'
+    POUNDS = 'lbs'
+    GRAMS = 'g'
+    MILLILITERS = 'mL'
+    FLUID_OUNCES = 'fl oz'
+
+    UNIT_CHOICES = [
+        (CUPS, 'Cups'),
+        (TABLESPOON, 'Tablespoon'),
+        (TEASPOONS, 'Teaspoons'),
+        (OUNCES, 'Ounces'),
+        (POUNDS, 'Pounds'),
+        (GRAMS, 'Grams'),
+        (MILLILITERS, 'Milliliters'),
+        (FLUID_OUNCES, 'Fluid Ounces'),
+    ]
+
     post = models.ForeignKey('blog.Post', on_delete=models.CASCADE)
-    ingredient = models.CharField(max_length=50)
-    quantity = models.CharField(max_length=50, blank=True, null=True)
-    unit = models.CharField(max_length=50, blank=True, null=True)
-    instructions = models.CharField(max_length=50, blank=True, null=True)
+    ingredient = models.CharField(max_length=50, blank=True, null=True)
+    quantity = models.IntegerField(max_length=50, blank=True, null=True)
+    unit = models.CharField(max_length=50, choices=UNIT_CHOICES, null=True, blank=True)
+    instructions = models.CharField(max_length=50, null=True, blank=True)
+
 
 class RecipeImg(models.Model):
     """
@@ -25,7 +46,8 @@ class RecipeImg(models.Model):
     img variable allows storing an image for a recipe.
     """
     post = models.ForeignKey('blog.Post', on_delete=models.CASCADE)
-    img = models.ImageField(upload_to='images/', null=True, blank=True)
+    img = models.ImageField(upload_to='images/', null=True, blank=False)
+
 
 class Post(models.Model):
     """
