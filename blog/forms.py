@@ -1,5 +1,4 @@
 from django import forms
-from django.contrib import admin
 from django.forms import inlineformset_factory
 from .models import Post, Comment, IngredientToRecipe, RecipeImg
 
